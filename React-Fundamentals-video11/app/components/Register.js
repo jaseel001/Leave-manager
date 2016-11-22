@@ -4,6 +4,31 @@ var transparentBg = require('../styles');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link
 
+function Conditionalinput (props) {
+  if(props.condition === true){
+    var Options = props.teachers.data.data.map(function(item) {
+      return (
+        <option key={item._id}>
+          {item.firstname}&nbsp;{item.lastname}
+        </option>
+      );
+    });
+
+    return (
+      <select
+        className='form-control'
+        onChange={props.updateTeacher}
+        placeholder='Your teachers name'
+        value={props.teachername} style={transparentBg.topmargin} >
+        {Options}
+        </select>
+    )
+  }
+  return (
+    <p></p>
+  )
+}
+
 function Register (props) {
   return (
     <div className="jumbotron col-sm-6 col-sm-offset-3 text-center" style={transparentBg.transparentBg}>
@@ -39,14 +64,18 @@ function Register (props) {
               type='checkbox'
               onChange={props.onUpdateTeacher}
               checked= {props.is_teacher}
-              id="is_teacher" />
+              id="is_teacher"
+              style={transparentBg.checkBox} />
             <label for="is_student">I am a student</label>
             <input
               type='checkbox'
               onChange={props.onUpdateStudent}
               checked= {props.is_student}
-              id="is_student" />
-            {props.teacher_selection_content}
+              id="is_student"
+              style={transparentBg.checkBox} />
+            <Conditionalinput condition={props.teacher_selection_content}
+            updateTeacher={props.onUpdateTeacherName} teachername={props.teachername}
+            teachers={props.teachers} />
           </div>
           <div className="form-group col-sm-4 col-sm-offset-4">
             <button
@@ -76,7 +105,7 @@ Register.propTypes = {
   lastname: PropTypes.string.isRequired,
   is_teacher: PropTypes.bool.isRequired,
   is_student: PropTypes.bool.isRequired,
-  teacher_selection_content: PropTypes.object.isRequired
+  teacher_selection_content: PropTypes.bool.isRequired
 }
 
 module.exports = Register

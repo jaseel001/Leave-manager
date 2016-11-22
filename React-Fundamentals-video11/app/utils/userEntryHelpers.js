@@ -21,11 +21,18 @@ var helpers = {
 		firstname: user.firstname,
         lastname: user.lastname,
         is_teacher: user.is_teacher,
-        is_student: user.is_student
+        is_student: user.is_student,
+        teachername: user.teachername
    	}).then(function (info) {
         return info;
      })
     .catch(function (err) {console.warn('Error in signup: ', err)})
+  },
+  teachersList: function(){
+    return axios.get('http://localhost:3000/teacherslist').then(function(info) {
+      return info;
+    })
+    .catch(function (err) {console.warn('Error in getting teachers lis', err)})
   }
 };
 

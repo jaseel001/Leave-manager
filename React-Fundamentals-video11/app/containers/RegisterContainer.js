@@ -1,6 +1,9 @@
 var React = require('react');
 var Home = require('../components/Register');
 var userEntryHelpers = require('../utils/userEntryHelpers');
+var WebStorage = require('react-webstorage')
+var webStorage = new WebStorage(window.sessionStorage);
+
 
 var PromptContainer = React.createClass({
   contextTypes: {
@@ -14,8 +17,20 @@ var PromptContainer = React.createClass({
       password: '',
       is_teacher: false,
       is_student : false,
-      teacher_selection_content : null
+      teacher_selection_content : false,
+      teachername : '',
+      isLoading: true,
+      teachers: []
     }
+  },
+  componentDidMount: function () {
+    userEntryHelpers.teachersList()
+      .then(function (teachers) {
+        this.setState({
+          teachers: teachers,
+          isLoading: false
+        })
+      }.bind(this))
   },
   handleSubmitUser: function (e) {
     e.preventDefault();
@@ -25,6 +40,7 @@ var PromptContainer = React.createClass({
     var lastname = this.state.lastname;
     var is_teacher= this.state.is_teacher;
     var is_student= this.state.is_student;
+    var teachername = this.state.teachername;
     var teacher_selection_content= this.state.teacher_selection_content;
     this.setState({
       firstname: '',
@@ -33,14 +49,17 @@ var PromptContainer = React.createClass({
       password: '',
       is_teacher: false,
       is_student: false,
-      teacher_selection_content : null
+      teacher_selection_content : false,
+      teachername : ''
     });
     var that = this;
     userEntryHelpers.signup(this.state)
      .then(function(user){
        if(user.status === 200){
+          webStorage.setItem('token', user.data.data.token);
+          webStorage.setItem('user', user.data.data.user.username);
           that.context.router.push({
-            pathname: '/playerOne',
+            pathname: '/dashboard',
             query: {
               data: user
             }
@@ -75,11 +94,15 @@ var PromptContainer = React.createClass({
     });
   },
   handleupdateStudent: function (event) {
-    var teacher_selection_content = event.target.checked == true?
-     <input type="text" className='form-control' placeholder="Your teachers Name" onChange={this.props.onUpdateStudent}/>: null;
+    var teacher_selection_content = event.target.checked == true? true: false;
     this.setState({
       is_student: event.target.checked,
       teacher_selection_content: teacher_selection_content
+    });
+  },
+  handleupdateTeachername: function(event){
+    this.setState({
+      teachername: event.target.value
     });
   },
   render: function () {
@@ -92,10 +115,13 @@ var PromptContainer = React.createClass({
         onUpdateLastname={this.handleupdateLastname}
         onUpdateTeacher={this.handleupdateTeacher}
         onUpdateStudent={this.handleupdateStudent}
+        onUpdateTeacherName={this.handleupdateTeachername}
         username={this.state.username} password={this.state.password}
         firstname={this.state.firstname} lastname={this.state.lastname}
         is_teacher={this.state.is_teacher} is_student={this.state.is_student}
-        teacher_selection_content = {this.state.teacher_selection_content} />
+        teacher_selection_content = {this.state.teacher_selection_content}
+        teachername={this.state.teachername}
+        teachers = {this.state.teachers}/>
     )
   }
 });

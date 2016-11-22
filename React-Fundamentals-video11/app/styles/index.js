@@ -7,6 +7,13 @@ var styles = {
   },
   topmargin: {
   	marginTop: '20px',
+  },
+  checkBox: {
+  	verticalAlign: 'sub',
+    margin: '0px 4px'
+  },
+  padding0: {
+  	padding: '0px'
   }
 }
 

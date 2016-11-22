@@ -1,3 +1,76 @@
 .topmargin{
 	margin-top: 20px;
 }
+.header-link{
+	padding:10px;
+}
+.content-right{
+	text-align: right;
+}
+.profile-pic{
+	width:40px;
+	height:40px;
+	border-radius: 25px;
+}
+.header{
+	background-color: black;
+	padding:5px 30px;
+}
+.header a{
+	color:#fff;
+	text-decoration: none
+}
+.header a:hover{
+	color:#e5e5e5;
+}
+.container-div{
+	padding:10px 30px;
+}
+.padding-0{
+	padding:0px;
+}
+.user-container{
+	border:1px solid #e5e5e5;
+	border-radius: 3px;
+	margin-right:20px;
+	width:23%;
+	margin-bottom:20px;
+	text-align: center;
+	padding: 5px 15px;
+}
+.btn-decline{
+	background-color: #4c4c4c;
+	margin-left:5px;
+	border-color:#4c4c4c;
+}
+.btn{
+	outline: none;
+}
+.btn-decline:hover{
+	background-color: #000;
+}
+.drop-menu{
+	position:absolute;
+	width: auto;
+    top: 50px;
+    right: 10px;
+    background-color: black;
+    color: #fff;
+    padding:0px;
+    z-index: 1;
+}
+.drop-menu ul{
+	list-style-type: none;
+	padding-left: 10px;
+    padding-right: 10px;
+    padding:0px;
+    margin-bottom: 0px;
+}
+.drop-menu ul li{
+	padding-left:20px;
+	padding-right: 20px;
+	border-bottom: 1px solid;
+	padding:20px;
+	padding: 7px 35px;
+	cursor: pointer;
+}

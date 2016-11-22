@@ -1,6 +1,6 @@
 var React = require('react');
 var Prompt = require('../components/Prompt');
-
+var Header = require('../components/Header');
 var PromptContainer = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
@@ -36,11 +36,14 @@ var PromptContainer = React.createClass({
   },
   render: function () {
     return (
+    <div>
+      <Header />
       <Prompt
         onSubmitUser={this.handleSubmitUser}
         onUpdateUser={this.handleUpdateUser}
         header={this.props.route.header}
         username={this.state.username} />
+    </div>
     )
   }
 });

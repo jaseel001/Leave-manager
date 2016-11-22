@@ -1,6 +1,9 @@
 var React = require('react');
 var Home = require('../components/Home');
 var userEntryHelpers = require('../utils/userEntryHelpers');
+var WebStorage = require('react-webstorage')
+var webStorage = new WebStorage(window.sessionStorage);
+
 
 var PromptContainer = React.createClass({
   contextTypes: {
@@ -24,8 +27,11 @@ var PromptContainer = React.createClass({
     userEntryHelpers.login(this.state)
      .then(function(user){
        if(user.status === 200){
+          console.log(user);
+          webStorage.setItem('token', user.data.data.token);
+          webStorage.setItem('user', user.data.data.user.username);
           that.context.router.push({
-            pathname: '/playerOne',
+            pathname: '/dashboard',
             query: {
               data: user
             }
